@@ -11,3 +11,11 @@ export function convertedValue(inputValue, inputUnits, outputUnits) {
 		.from(inputUnits)
 		.to(outputUnits);
 }
+
+export function measurementTypes() {
+	return convert().measures();
+}
+
+export function unitsByMeasurementType(measurementType) {
+	return convert().possibilities(measurementType);
+}

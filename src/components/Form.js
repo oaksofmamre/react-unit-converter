@@ -1,29 +1,66 @@
 import React, { Component } from "react";
-// Add import statements
-import InputGroup from "./elements/InputGroup";
 import Input from "./elements/Input";
+import InputGroup from "./elements/InputGroup";
 import Select from "./elements/Select";
 import Output from "./Output";
-
-// Hard-coded options for now
-const options = ["mm", "cm", "m", "km"];
+import {
+	measurementTypes,
+	unitsByMeasurementType
+} from "../helpers/conversion";
 
 class Form extends Component {
+	constructor() {
+		super();
+		this.state = {
+			measurementType: "length",
+			inputValue: "",
+			inputUnits: "",
+			outputUnits: ""
+		};
+	}
+
+	onChangeInput = e => {
+		this.setState({
+			[e.target.name]: e.target.value
+		});
+	};
+
 	render() {
-		// Add text and select inputs
+		const { inputValue, inputUnits, outputUnits, measurementType } = this.state;
+
 		return (
 			<form>
 				<div className="well">
-					<h2>Input</h2>
+					<h3>Input</h3>
+
+					<InputGroup name="measurementType" labelText="Type of Measurement">
+						<Select
+							name="measurementType"
+							value={measurementType}
+							options={measurementTypes(measurementType)}
+							onChange={this.onChangeInput}
+						/>
+					</InputGroup>
+
 					<InputGroup name="inputValue" labelText="Amount">
-						<Input name="inputValue" value="42" />
+						<Input
+							name="inputValue"
+							value={this.state.inputValue}
+							onChange={this.onChangeInput}
+						/>
 					</InputGroup>
 
 					<InputGroup name="inputUnits" labelText="Units">
-						<Select name="inputUnits" options={options} value="m" />
+						<Select
+							name="inputUnits"
+							value={this.state.inputUnits}
+							options={unitsByMeasurementType(measurementType)}
+							onChange={this.onChangeInput}
+						/>
 					</InputGroup>
-					<Output inputValue="42" inputUnits="m" outputUnits="km" />
 				</div>
+
+				<Output onChangeInput={this.onChangeInput} {...this.state} />
 			</form>
 		);
 	}
