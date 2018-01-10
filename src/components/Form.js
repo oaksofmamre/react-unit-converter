@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import InputGroup from "./elements/InputGroup";
 import Input from "./elements/Input";
 import Select from "./elements/Select";
+import Output from "./Output";
 
 // Hard-coded options for now
 const options = ["mm", "cm", "m", "km"];
@@ -21,6 +22,7 @@ class Form extends Component {
 					<InputGroup name="inputUnits" labelText="Units">
 						<Select name="inputUnits" options={options} value="m" />
 					</InputGroup>
+					<Output inputValue="42" inputUnits="m" outputUnits="km" />
 				</div>
 			</form>
 		);
